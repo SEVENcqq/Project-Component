@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="login-form forms">
+            <h1 class="form-title">
+                Login
+            </h1>
+            <div class="input-wrapper">
+                <span class="input-title">
+                    Email
+                </span>
+                <input type="text" class="ipt">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-title">
+                    Password
+                </span>
+                <input type="password" class="ipt">
+            </div>
+            <div class="other">
+                Forgot Password
+            </div>
+            <button class="btn">Login</button>
+            <div class="login-register-method">
+                <div class="tips"><span>Other Login</span></div>
+                <div class="method-wrapper">
+                    <div class="method-item">
+                        <img src="./asset/qq.png" alt="">
+                    </div>
+                    <div class="method-item">
+                        <img src="./asset/weibo.png" alt="">
+                    </div>
+                    <div class="method-item">
+                        <img src="./asset/weixin.png" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="signup-form forms">
+            <h1 class="form-title">
+                Signup
+            </h1>
+            <div class="input-wrapper">
+                <span class="input-title">
+                    Email
+                </span>
+                <input type="text" class="ipt">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-title">
+                    Password
+                </span>
+                <input type="password" class="ipt">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-title">
+                    Confirm Password
+                </span>
+                <input type="password" class="ipt">
+            </div>
+            <button class="btn">Signup</button>
+            <div class="login-register-method">
+                <div class="tips"><span>Other Signun</span></div>
+                <div class="method-wrapper">
+                    <div class="method-item">
+                        <img src="./asset/qq.png" alt="">
+                    </div>
+                    <div class="method-item">
+                        <img src="./asset/weibo.png" alt="">
+                    </div>
+                    <div class="method-item">
+                        <img src="./asset/weixin.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-text">
+            <h3>Don't have an account?<span class="change">Signup</span></h3>
+        </div>
+    </div>
+</body>
+<script>
+    const body = document.body
+    const change = document.querySelector('.change')
+    const loginForm = document.querySelector('.login-form')
+    const signupForm = document.querySelector('.signup-form')
+    const bottomText = document.querySelector('.bottom-text')
+    let changeFlag = true
+    let timer = null
+
+    // 节流函数
+    function throttle(fn, delay) {
+        return function () {
+            if (timer) {
+                return
+            }
+            fn.apply(this, arguments)
+            timer = setTimeout(() => {
+                timer = null
+            }, delay)
+        }
+    }
+
+    function clickFun() {
+        if (changeFlag) {
+            body.style.backgroundImage = 'url(./asset/bg_night.jpg)'
+            loginForm.style.opacity = 0
+            loginForm.style.zIndex = -1
+            signupForm.style.opacity = 1
+            signupForm.style.zIndex = 1
+            bottomText.innerHTML = `<h3>You have an account?<span class="change">Login</span></h3>`
+            changeFlag = false
+        } else {
+            body.style.backgroundImage = 'url(./asset/bg_day.jpg)'
+            loginForm.style.opacity = 1
+            loginForm.style.zIndex = 1
+            signupForm.style.opacity = 0
+            signupForm.style.zIndex = -1
+            bottomText.innerHTML = `<h3>Don't have an account?<span class="change">Signup</span></h3>`
+            changeFlag = true
+        }
+        const change = document.querySelector('.change')
+        change.onclick = throttle(() => clickFun(), 1000)
+
+    }
+    change.onclick = throttle(() => clickFun(), 1000)
+</script>
+
+</html>

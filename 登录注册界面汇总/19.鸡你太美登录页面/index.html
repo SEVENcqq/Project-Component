@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鸡你太美登录页</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="chicken-wrapper">
+            <div class="video-wrapper">
+                <video src="./asset/chickenYouAreSoBeautiful.mp4" muted="true" id="video" autoplay loop
+                    oncanplay="init()" width="100%" height="100%" crossOrigin="anonymous"></video>
+            </div>
+            <canvas id="cvs"></canvas>
+            <canvas id="cvs2" onclick="video.play()" loop>
+            </canvas>
+            <div class="card">
+                <span class="card-text">演唱</span>
+                <img class="card-img" src="./asset/shutUp.png" alt="">
+            </div>
+
+        </div>
+        <div class="login-wrapper">
+            <div class="login-title">
+                <h1>登 录</h1>
+                <span class="text-detail">欢迎来到🐔🍐🌞🍓登录界面，请登录您的🏀账号
+                </span>
+            </div>
+            <div class="login-content">
+                <div class="up-wrapper">
+                    <div class="text">
+                        <span class="username-text">Username</span>
+                        <span class="username-text">Username</span>
+                    </div>
+                    <img src="./asset/username.png" alt="">
+                    <input class="input" type="text">
+                </div>
+                <div class="up-wrapper">
+                    <div class="text">
+                        <span class="password-text">Password</span>
+                        <span class="password-text">Password</span>
+                    </div>
+                    <img src="./asset/pasword.png" alt="">
+                    <input class="input" type="password">
+                </div>
+                <div class="forgot-password">
+                    <span class="first-span">如果你想要更改或者忘记了密码,</span>
+                    <span class="second-span">🖱️点我更改密码</span>
+                </div>
+                <button class="login-btn">Login in</button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    // 解决音频跨域问题
+
+    //音频控制--静音和演唱
+    let mutedFlag = false
+    document.querySelector('.card').onclick = () => {
+        if (mutedFlag) {
+            video.muted = true
+            mutedFlag = false
+            document.querySelector('.card-text').innerHTML = '演唱'
+            document.querySelector('.card-img').src = './asset/shutUp.png'
+        }
+        else {
+            video.muted = false
+            mutedFlag = true
+            document.querySelector('.card-text').innerHTML = '闭嘴'
+            document.querySelector('.card-img').src = './asset/singing.png'
+        }
+    }
+    //控制username，password动画
+    const inputs = document.querySelectorAll('.input')
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].onfocus = () => {
+            let spans
+            let moveTop = 0
+            if (i == 0) {
+                spans = document.querySelectorAll('.username-text')
+            }
+            else {
+                spans = document.querySelectorAll('.password-text')
+            }
+
+            let frame = setInterval(() => {
+                moveTop = moveTop + 5
+                spans[0].style.top = '-' + moveTop + 'px'
+                spans[1].style.top = '-' + (moveTop + 1) + 'px'
+                if(moveTop == 20)
+                    clearInterval(frame)
+            }, 25);
+
+        }
+    }
+    //左侧只因你太美字符串动画
+    const init = () => {
+        const ctx = cvs.getContext('2d')
+        const ctx2 = cvs2.getContext('2d')
+    video.crossOrigin = '';        
+        
+        cvs.height = cvs2.height = video.offsetHeight
+        cvs.width = cvs2.width = video.offsetWidth
+        const playVideo = () => {
+            requestAnimationFrame(playVideo)
+            const { width, height } = cvs
+            ctx.drawImage(video, 0, 0, width, height)
+            const data = ctx.getImageData(0, 0, width, height).data
+            ctx2.clearRect(0, 0, width, height)
+            const bl = 8
+            ctx.font = '12px serif'
+            for (let i = 0; i < data.length; i += 4 * bl) {
+                const x = parseInt((i + 1) % (width * 4) / 4)
+                const y = parseInt(i / (width * 4))
+                if (x % bl === 0 && y % bl === 0) {
+                    //修改const g = parseInt((data[i] + data[i+1] + data[i+2]) / 1.5)中的1.5可以改变清晰度
+                    const g = parseInt((data[i] + data[i + 1] + data[i + 2]) / 1.5)
+                    ctx2.fillStyle = `rgba(${g}, ${g}, ${g}, ${data[i + 3]})`
+                    //修改ctx2.fillText('6', x, y)中的6可以改变显示的字符
+                    ctx2.fillText('6', x, y)
+                }
+            }
+        }
+        playVideo()
+    } 
+
+</script>
+
+  
+</html>

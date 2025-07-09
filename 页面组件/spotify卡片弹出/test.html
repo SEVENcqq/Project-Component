@@ -1,0 +1,131 @@
+<template>
+  <div>
+    <div class="logo">
+      <span>MAOS.</span>
+    </div>
+    <div class="wrapper">
+      <div class="controls-btn">
+        <div class="next-wrapper" @click="nextFun">
+          <svg xmlns="http://www.w3.org/2000/svg" style="transform: rotate(180deg);" viewBox="0 0 24 24"
+               width="24" height="24" class="next">
+            <path d="M9 18v-5l8 5V6l-8 5V6H7v12z"></path>
+          </svg>
+        </div>
+        <div class="last-wrapper" @click="lastFun">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="last">
+            <path d="M9 18v-5l8 5V6l-8 5V6H7v12z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="describe">
+        <div class="tips">{{ currentCard.tips }}</div>
+        <div class="contnet-text">{{ currentCard.contnetText }}</div>
+      </div>
+      <div class="card-slide">
+        <div class="card-stack-wrapper" v-for="(card, index) in cardInfo" :key="index"
+             :style="'background-image: url(' + card.imgUrl + '); transform: ' + getCardTransform(index) + ';" 
+             @mousedown="dragMouseDown">
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Index",
+  data() {
+    return {
+      dwellPosition: window.innerWidth,
+      currentCardIndex: 0,
+      cardInfo: [
+        {
+          bgColor: '255,188,75',
+          imgUrl: './index/img/8.png',
+          tips: 'Product Design',
+          contnetText: 'Finding your T-Shape as a Specialist Designer'
+        },
+        {
+          bgColor: '255,188,75',
+          imgUrl: './index/img/7.png',
+          tips: 'Product Design',
+          contnetText: 'Designing for the World: An Introduction to Localization'
+        },
+        {
+          bgColor: '255,208,213',
+          imgUrl: './index/img/6.png',
+          tips: 'Behind The Scenes',
+          contnetText: 'From Web Page to Web Player: How Spotify Designed a New Homepage Experience'
+        },
+        {
+          bgColor: '255,188,75',
+          imgUrl: './index/img/5.png',
+          tips: 'Design Systems',
+          contnetText: 'Can I get an Encore? Spotify’s Design System, Three Years On'
+        },
+        {
+          bgColor: '164,201,216',
+          imgUrl: './index/img/4.png',
+          tips: 'Methods',
+          contnetText: 'Navigating the Discovery Phase'
+        },
+        {
+          bgColor: '255,208,213',
+          imgUrl: './index/img/3.png',
+          tips: 'BEHIND THE SCENES',
+          contnetText: 'Making Moves: Designing Motion for 2022 Wrapped'
+        },
+        {
+          bgColor: '255,208,213',
+          imgUrl: './index/img/2.png',
+          tips: 'Q+A',
+          contnetText: 'Ask Spotify Design 07'
+        },
+        {
+          bgColor: '255,208,213',
+          imgUrl: './index/img/1.png',
+          tips: 'Q+A',
+          contnetText: 'Growing, Scaling, and Tuning: Meet Spotify’s Global Head of Design Ops'
+        }
+      ]
+    };
+  },
+  computed: {
+    currentCard() {
+      return this.cardInfo[this.currentCardIndex];
+    }
+  },
+  methods: {
+    dragMouseDown(e) {
+      const cardIndex = this.getCardIndex(e);
+      if (cardIndex !== -1) {
+        this.currentCardIndex = cardIndex;
+      }
+    },
+    getCardIndex(e) {
+      let target = e.target;
+      while (target && !target.classList.contains("card-stack-wrapper")) {
+        target = target.parentNode;
+      }
+      if (target) {
+        return Array.from(target.parentNode.children).indexOf(target);
+      }
+      return -1;
+    },
+    nextFun() {
+      this.currentCardIndex = (this.currentCardIndex + 1) % this.cardInfo.length;
+    },
+    lastFun() {
+      this.currentCardIndex = (this.currentCardIndex - 1 + this.cardInfo.length) % this.cardInfo.length;
+    },
+    getCardTransform(index) {
+      const randomRotation = Math.floor(Math.random() * 9 + 2);
+      if (index === this.currentCardIndex) {
+        return `rotateX(0) rotateY(0) rotateZ(0) scale(1)`;
+      } else {
+        return `rotateX(5deg) rotateY(0.438122deg) rotateZ(${randomRotation}deg) scale(1)`;
+      }
+    }
+  }
+}
+</script>

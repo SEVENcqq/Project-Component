@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./asset/plugin/swiper-bundle.min.css">
+</head>
+
+<body>
+    <div class="swiper-content">
+        <div class="title">
+            <h1>In the Spotlight</h1>
+            <span>Meet the humans who design Spotify</span>
+        </div>
+        <div class="swiper">
+            <div class="swiper-wrapper"></div>
+        </div>
+    </div>
+
+    <script src="./asset/plugin/swiper-bundle.min.js"></script>
+    <script src="./photos.js"></script>
+    <script>
+        var mySwiper = new Swiper('.swiper', {
+            grabCursor: true,
+            slidesPerView: 2,
+            spaceBetween: 140,
+        })
+    </script>
+    <script>
+        const swiperWrapper = document.querySelector('.swiper-wrapper')
+        photos.forEach((item, index) => {
+            swiperWrapper.innerHTML += `
+            <div class="swiper-slide">
+                    <div class="spotlight-card">
+                        <img src="./asset/img/${item.photoUrl}" alt="">
+                        <div class="sketch">
+                            <p>
+                                ${item.detail}
+                            </p>
+                        </div>
+                        <div class="introduce">
+                            <span class="name">${item.name}</span>
+                        </div>
+                    </div>
+                    <div class="flower-wrapper">
+                        ${index % 2 ? `<svg xmlns="http://www.w3.org/2000/svg" class="flower" fill="${item.color}" viewBox="0 0 800 800">
+                                            <path d="M604 367C793 244 745-41 393 235 310 62 163-3 253 263c-174-93-390-85-75 104-115 33-306 230 138 172-8 136 119 268 164 93 72 94 115-63 3-140 262 66 453 17 121-125z">
+                                            </path>
+                                       </svg>` 
+                                       : 
+                                       `<svg xmlns="http://www.w3.org/2000/svg" class="flower" fill="${item.color}" viewBox="0 0 800 800">
+                                            <path d="M761 374c41-33-142-55-200-43 25-41 36-250-18-207 7-87-143-157-171-53-124-52-89 134-73 186-56-38-289-93-198-18-99 43-120 344 18 383-19 67 161-93 188-112-14 82 181 296 193 235 52 99 268-21 216-109 72 5-72-137-129-176 61-2 222-62 174-86z">
+                                            </path>
+                                        </svg>`
+                        }
+                    </div>
+                </div>
+            `
+        })
+    </script>
+</body>
+
+</html>

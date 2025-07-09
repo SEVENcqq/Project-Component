@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="content-wrapper">
+            <div class="nav">
+                <div class="logo">
+                    <img src="./asset/logo.jpg" alt="">
+                </div>
+                <div class="nav-item" id="nav-sigin-btn">
+                    <img src="./asset/sigin.png" alt="">
+                    <span>Sigin</span>
+                    <div class="block"></div>
+                </div>
+                <div class="nav-item" id="nav-sigup-btn">
+                    <img src="./asset/signup.png" alt="">
+                    <span>SigUp</span>
+                    <div class="block"></div>
+                </div>
+            </div>
+            <div class="center">
+                <div class="sigin-img-wrapper">
+                    <div class="img-tips">
+                        <h1>Start Your Work</h1>
+                        <h5>One Key adn there links</h5>
+                    </div>
+                </div>
+                <div class="sigup-img-wrapper">
+                    <div class="img-tips">
+                        <h1>Start Your Work</h1>
+                        <h5>One Key adn there links</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="form">
+                <div class="form-wrapper">
+                    <div class="sigin common-style">
+                        <div class="title">
+                            <span>Don't have an account?</span>
+                            <span>Sign Up.</span>
+                        </div>
+                        <div class="inputs-wrapper">
+                            <div class="inputs-item items-email">
+                                <span class="input-tips">E-mail</span>
+                                <input type="text" class="inputs">
+                            </div>
+                            <div class="inputs-item items-pwd">
+                                <span class="input-tips">Password</span>
+                                <input type="password" class="inputs">
+                            </div>
+                            <button class="sigin-btn">SIGN IN</button>
+                        </div>
+                        <div class="tips">
+                            <span class="tips-txt">By clicking the Sign In Button,you therefore agre to the Privacy
+                                Policy.</span>
+                        </div>
+                    </div>
+                    <div class="sigup common-style">
+                        <div class="title animations">
+                            <span>Don't have an account?</span>
+                            <span>Sign In.</span>
+                        </div>
+                        <div class="inputs-wrapper">
+                            <div class="inputs-item items-user animations">
+                                <span class="input-tips">User</span>
+                                <input type="text" class="inputs">
+                            </div>
+                            <div class="inputs-item items-email animations">
+                                <span class="input-tips">E-mail</span>
+                                <input type="text" class="inputs">
+                            </div>
+                            <div class="inputs-item items-pwd animations">
+                                <span class="input-tips">Password</span>
+                                <input type="password" class="inputs">
+                            </div>
+                            <button class="sigin-btn animations">SIGN IN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const siginBtn = document.getElementById('nav-sigin-btn');
+    const sigupBtn = document.getElementById('nav-sigup-btn');
+    const siginForm = document.querySelector('.sigin');
+    const sigupForm = document.querySelector('.sigup');
+    const siginImgWrapper = document.querySelector('.sigin-img-wrapper');
+    const sigupImgWrapper = document.querySelector('.sigup-img-wrapper');
+    const animations = document.querySelectorAll('.animations');
+    const nav = document.querySelector('.nav');
+    const form = document.querySelector('.form');
+    const center = document.querySelector('.center');
+
+    let flag = true;
+    sigupBtn.onclick = function () {
+        if (flag) {
+            flag = false;
+            siginForm.style.top = '140%';
+            siginImgWrapper.style.transform = 'translateY(-100%)';
+            sigupImgWrapper.style.transform = 'translateY(-100%)';
+            nav.classList.add('nav-form-animation-bottom');
+            form.classList.add('nav-form-animation-bottom');
+            nav.classList.remove('nav-form-animation-top');
+            form.classList.remove('nav-form-animation-top');
+            setTimeout(function () {
+                sigupForm.style.zIndex = '1';
+                sigupForm.style.top = '50%';
+                for (let i = 0; i < animations.length; i++) {
+                    setTimeout(function () {
+                        animations[i].style.transition = '1s';
+                        animations[i].style.opacity = '1';
+                        animations[i].style.transform = 'translate(0, 0)';
+                        if (i == animations.length - 3) {
+                            flag = true;
+                        }
+                    }, i * 250)
+                }
+            }, 500)
+        }
+    }
+
+    siginBtn.onclick = function () {
+        if (flag) {
+            flag = false;
+            siginForm.style.top = '50%';
+            sigupForm.style.transition = '1s';
+            sigupForm.style.top = '-100%';
+            siginImgWrapper.style.transform = 'translateY(0%)';
+            sigupImgWrapper.style.transform = 'translateY(0%)';
+            nav.classList.remove('nav-form-animation-bottom');
+            form.classList.remove('nav-form-animation-bottom');
+            nav.classList.add('nav-form-animation-top');
+            form.classList.add('nav-form-animation-top');
+            flag = true
+            setTimeout(function () {
+                sigupForm.style.zIndex = '-1';
+                for (let i = 0; i < animations.length; i++) {
+                    animations[i].style.transition = '0';
+                    animations[i].style.opacity = '0';
+                    animations[i].style.transform = 'translate(-10%, 0)';
+                }
+                sigupForm.style.top = '-50%';
+            }, 1000)
+        }
+    }
+</script>
+
+</html>
